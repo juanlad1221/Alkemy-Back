@@ -8,41 +8,6 @@ const app = express();
 app.use(cors())
 app.use(express.urlencoded({ extended:false }))
 app.use(express.json())
-/*
-app.post("/api/login", (req , res) => {
-    const user = {
-        id: 1,
-        nombre : "Henry",
-        email: "henry@email.com"
-    }
-
-    jwt.sign({user}, 'secretkey', {expiresIn: '1h'}, (err, token) => {
-        res.json({
-            token
-        });
-    });
-
-});
-
-app.post("/api/getBalance", verifyToken, (req , res) => {
-
-    jwt.verify(req.token, 'secretkey', (error, authData) => {
-        if(error){
-            res.sendStatus(403);
-        }else{
-            res.json({
-                    mensaje: "Post fue creado",
-                    authData
-                });
-        }
-    });
-});*/
-
-
-
-
-
-
 
 
 
@@ -51,15 +16,18 @@ app.use('/api', require('./routes/authentication'))
 
 
 
-//Puerto y conexion de DB
-app.listen(3005, () => {
-    console.log('App running...')
+//--------------------------SERVER---------------------------------------------------------
+app.set('port', process.env.PORT || 3000);
+app.listen(app.get('port'), () => {
+    console.log(`Server corriendo en ${app.get('port')}`)
 
     //db conexion
     sequelize.authenticate().then(() => {
         console.log("Database Conected...")
     }).catch(err => console.log('Error in database...', err))
+
 })
+//------------------------------------------------------------------------------------------
 
 
 
